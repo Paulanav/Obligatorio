@@ -45,13 +45,48 @@
         <div class="text-center p-4">
             <h2>Productos</h2>
             <p class="lead">Verás aquí todos los productos de la categoria.</p>
-        </div>
+        </div> 
+        <div class="container">
+          <div class="row">
+              <div class="col text-right">
+                  <div class="btn-group btn-group-toggle mb-4" data-toggle="buttons">
+                      <label class="btn btn-light active" id="costAsc" >
+                          <input type="radio" name="options" autocomplete="off" checked>-$
+                      </label>
+                      <label class="btn btn-light" id="costDesc" >
+                          <input type="radio" name="options" autocomplete="off">+$
+                        </label>
+
+                  </div>
+              </div>
+          </div>
+          <div class="row justify-content-end">
+            <div class="col-md-6"></div>
+              <div class="col-md-6 col-sm-12 mb-1 container">
+                <div class="row container p-0 m-0">
+                  <div class="col">
+                    <p class="font-weight-normal text-right my-2">Precio </p>
+                  </div>
+                  <div class="col">
+                    <input class="form-control" type="number" step="1000" placeholder="min." id="productsFilterCostMin">
+                  </div>
+                  <div class="col">
+                    <input class="form-control" type="number" step="1000" placeholder="máx." id="productsFilterCostMax">
+                  </div>
+                  <div class="col-3 p-0">
+                    <div class="btn-group" role="group">
+                      <button class="btn btn-light btn-block" id="productsFilterCost">Filtrar</button>
+                      <button class="btn btn-link btn-sm" id="clearProductsFilter">Limpiar</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
         <div class="container mt-5">
-            <div class="row">
-              <a type="button" class="btn btn-light btn-lg btn-block" href="product-info.html">Ver un producto</a>
             </div> 
             <div class="list-group" id="product-list"></div>
         </div>
+      </div>
     </main>
     <footer class="text-muted bg-light">
       <div class="container">
