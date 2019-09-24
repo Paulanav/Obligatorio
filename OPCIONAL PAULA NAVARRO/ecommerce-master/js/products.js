@@ -1,5 +1,5 @@
-const ORDER_ASC_COST = "-$"
-const ORDER_DEC_COST = "+$"
+const ORDER_ASC_COST = "Asc"
+const ORDER_DEC_COST = "Desc"
 const ORDER_COST = "costo"
 var currentProductsArray = [];
 var currentSortCriteria = undefined;
@@ -34,18 +34,15 @@ function sortProducts(criteria, array){
     return result;
 }
 
-
-var productsArray = [];
-
-let htmlContentToAppend = "";
-function showProductsList(array){
-    for(let i = 0; i < array.length; i++){
-        let product = array[i];
+function showProductsList(){
+    let htmlContentToAppend = "";
+    for(let i = 0; i < currentProductsArray.length; i++){
+        let product = currentProductsArray[i];
         
         if (((minCost == undefined) || (minCost != undefined && parseInt(product.cost) >= minCost)) &&
             ((maxCost == undefined) || (maxCost != undefined && parseInt(product.cost) <= maxCost))){
 
-
+        
         htmlContentToAppend += `
         <div class="list-group-item list-grop-item-action">
             <div class="row">
@@ -81,57 +78,53 @@ function sortAndShowProducts(sortCriteria, productsArray){
 
     currentProductsArray = sortProducts(currentSortCriteria, currentProductsArray);
 
-    showProductsList(currentProductsArray);
+    showProductsList();
 }
 
 
 document.addEventListener("DOMContentLoaded", function(e){
     getJSONData(PRODUCTS_URL).then(function(resultObj){
-        if (resultObj.status === "ok")
-        {
-            productsArray = resultObj.data;
-         
-            showProductsList(productsArray);
+        if (resultObj.status === "ok"){
+            sortAndShowProducts(ORDER_ASC_COST, resultObj.data);
         }
     });
- 
-});
-document.getElementById("costAsc").addEventListener("click", function(){
-    sortAndShowProducts(ORDER_ASC_COST);
-});
 
-document.getElementById("costDesc").addEventListener("click", function(){
-    sortAndShowProducts(ORDER_DEC_COST);
-});
+    document.getElementById("costAsc").addEventListener("click", function(){
+        sortAndShowProducts(ORDER_ASC_COST);
+    });
 
+    document.getElementById("costDesc").addEventListener("click", function(){
+        sortAndShowProducts(ORDER_DEC_COST);
+    });
 
-document.getElementById("clearProductsFilter").addEventListener("click", function(){
-    document.getElementById("productsFilterCostMin").value = "";
-    document.getElementById("productsFilterCostMax").value = "";
+    document.getElementById("clearProductsFilter").addEventListener("click", function(){
+        document.getElementById("productsFilterCostMin").value = "";
+        document.getElementById("productsFilterCostMax").value = "";
 
-    minCost = undefined;
-    maxCost = undefined;
-
-    showProductsList(currentProductsArray);
-});
-document.getElementById("productsFilterCost").addEventListener("click", function(){
-   
-    minCost = document.getElementById("productsFilterCostMin").value;
-    maxCost = document.getElementById("productsFilterCostMax").value;
-
-    if ((minCost != undefined) && (minCost != "") && (parseInt(minCost)) >= 0){
-        minCost = parseInt(minCost);
-    }
-    else{
         minCost = undefined;
-    }
-
-    if ((maxCost != undefined) && (maxCost != "") && (parseInt(maxCost)) >= 0){
-        maxCost = parseInt(maxCost);
-    }
-    else{
         maxCost = undefined;
-    }
 
-    showProductsList(currentProductsArray);
+        showProductsList();
+    });
+    document.getElementById("productsFilterCost").addEventListener("click", function(){
+   
+        minCost = document.getElementById("productsFilterCostMin").value;
+        maxCost = document.getElementById("productsFilterCostMax").value;
+
+        if ((minCost != undefined) && (minCost != "") && (parseInt(minCost)) >= 0){
+            minCost = parseInt(minCost);
+        }
+        else{
+            minCost = undefined;
+        }
+
+        if ((maxCost != undefined) && (maxCost != "") && (parseInt(maxCost)) >= 0){
+            maxCost = parseInt(maxCost);
+        }
+        else{
+            maxCost = undefined;
+        }
+
+        showProductsList();
+    });
 });
