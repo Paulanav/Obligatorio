@@ -17,19 +17,19 @@ function sortProducts(criteria, array){
         });            
     }else if (criteria === ORDER_DEC_COST){
         result = array.sort(function(a, b) {
-        if ( a.cost > b.cost ){ return -1; }
-        if ( a.cost < b.cost ){ return 1; }
-        return 0;
-    });
+            if ( a.cost > b.cost ){ return -1; }
+            if ( a.cost < b.cost ){ return 1; }
+            return 0;
+        });
     }else if (criteria === ORDER_COST){
         result = array.sort(function(a, b) {
-        let aCost = parseInt(a.cost);
-        let bCost = parseInt(b.cost);
+            let aCost = parseInt(a.cost);
+            let bCost = parseInt(b.cost);
 
-        if ( aCost > bCost ){ return -1; }
-        if ( aCost < bCost ){ return 1; }
-        return 0;
-    });
+            if ( aCost > bCost ){ return -1; }
+            if ( aCost < bCost ){ return 1; }
+            return 0;
+        });
 }
     return result;
 }
@@ -84,9 +84,7 @@ function sortAndShowProducts(sortCriteria, productsArray){
     showProductsList(currentProductsArray);
 }
 
-//Función que se ejecuta una vez que se haya lanzado el evento de
-//que el documento se encuentra cargado, es decir, se encuentran todos los
-//elementos HTML presentes.
+
 document.addEventListener("DOMContentLoaded", function(e){
     getJSONData(PRODUCTS_URL).then(function(resultObj){
         if (resultObj.status === "ok")
