@@ -13,8 +13,11 @@ function updateTotalCosts(){
 
 }
 
-function updateSubtotal(){
-
+function updateSubtotal(precioUnitario){
+    //let precioUnitario = parseInt(document.getElementById("unitCost").textContent);
+    let cantidad = parseInt(document.getElementById("liveCount").value);
+    let sTotal = precioUnitario * cantidad;
+    document.getElementById("subTotal").innerHTML = sTotal;
 }
 
 function showPaymentTypeNotSelected(){
@@ -31,16 +34,18 @@ function showArticles(array){
         let articles = array[i];
         tableContent += `
                 <tr>
-                    <td><img src="`+ articles.scr +`" + width="50px"></td>
+                    <td><img src="`+ articles.src +`" + width="70px" class="img-thumbnail"></td>
                     <td>`+ articles.name +`<td>
-                    <td>`+ articles.unitCost +`</td>
-                    <td>`+ articles.currency +`</td>
-                    <td><input type="number" id="liveCount" value="1" min="1"></td>
-                    <td>200</td>
+                    <td id="unitCost">`+ articles.currency +` `+` ` + articles.unitCost +`</td>
+                    <td><input type="number" id="liveCount" class="form-control" style="width: 5em;"`+ articles.count +`" min="1"></td>
+                    <th id="subTotal"></th>
                 </tr>
             `
-        document.getElementById("carritoTabla").innerHTML = tableContent;
-
+            document.getElementById("carritoTabla").innerHTML = tableContent;
+            updateSubtotal(articles.unitCost);
+            document.getElementById("liveCount").addEventListener("change",function(){
+            updateSubtotal(articles.unitCost);
+        });
     }
 }
 
@@ -49,9 +54,9 @@ function showArticles(array){
 //elementos HTML presentes.
 document.addEventListener("DOMContentLoaded", function(_e){
     getJSONData(CART_INFO_URL).then(function(resultObj){
-        if (resultObj.status=== "ok")
+        if (resultObj.status === "ok")
         {
-            showArticles();
+            showArticles(resultObj.data.articles);
         }
     });
 });
