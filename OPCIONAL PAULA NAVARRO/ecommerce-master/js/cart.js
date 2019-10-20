@@ -37,7 +37,7 @@ function showArticles(array){
                     <td><img src="`+ articles.src +`" + width="70px" class="img-thumbnail"></td>
                     <td>`+ articles.name +`<td>
                     <td id="unitCost">`+ articles.currency +` `+` ` + articles.unitCost +`</td>
-                    <td><input type="number" id="liveCount" class="form-control" style="width: 5em;"`+ articles.count +`" min="1"></td>
+                    <td><input type="number" id="liveCount" class="form-control" style="width: 5em" value="`+ articles.count +`" min="1"></td>
                     <th id="subTotal"></th>
                 </tr>
             `
