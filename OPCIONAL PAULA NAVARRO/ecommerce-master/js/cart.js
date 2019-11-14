@@ -10,14 +10,18 @@ let ERROR_MSG = "Ha habido un error :(, verifica qué pasó.";
 
 //Función que se utiliza para actualizar los costos de publicación
 function updateTotalCosts(){
-
+    let costoEnvio = subtotal * shippingPercentage;
+    document.getElementById("precioEnvio").innerHTML = costoEnvio;
+    total = costoEnvio + subtotal;
+    document.getElementById("precioTotal").innerHTML = total;
 }
 
 function updateSubtotal(precioUnitario){
     //let precioUnitario = parseInt(document.getElementById("unitCost").textContent);
     let cantidad = parseInt(document.getElementById("liveCount").value);
-    let sTotal = precioUnitario * cantidad;
-    document.getElementById("subTotal").innerHTML = sTotal;
+    subtotal = precioUnitario * cantidad;
+    document.getElementById("subTotal").innerHTML = subtotal;
+    document.getElementById("precioSubtotal").innerHTML = subtotal;
 }
 
 function showPaymentTypeNotSelected(){
@@ -43,9 +47,13 @@ function showArticles(array){
             `
             document.getElementById("carritoTabla").innerHTML = tableContent;
             updateSubtotal(articles.unitCost);
+            updateTotalCosts();
+            
             document.getElementById("liveCount").addEventListener("change",function(){
-            updateSubtotal(articles.unitCost);
+            updateSubtotal(articles.unitCost); 
+            updateTotalCosts();
         });
+           
     }
 }
 
@@ -60,3 +68,15 @@ document.addEventListener("DOMContentLoaded", function(_e){
         }
     });
 });
+document.getElementById("sendPremium").addEventListener("change", function(){
+    shippingPercentage = 0.15;
+    updateTotalCosts();
+})
+document.getElementById("sendExpress").addEventListener("change", function(){
+    shippingPercentage = 0.07;
+    updateTotalCosts();
+})
+document.getElementById("sendStandard").addEventListener("change", function(){
+    shippingPercentage = 0.05;
+    updateTotalCosts();
+})
