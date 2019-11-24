@@ -80,3 +80,46 @@ document.getElementById("sendStandard").addEventListener("change", function(){
     shippingPercentage = 0.05;
     updateTotalCosts();
 })
+
+var validarCart = document.getElementById("validarInfo");
+validarCart.addEventListener("submit", function(e){
+    
+    let validarCalle = document.getElementById("direccion");
+    let validarNumero = document.getElementById("numeroPuerta");
+    let validarEsquina = document.getElementById("Esquina");
+    let infoMissing = false ;
+
+    validarCalle.classList.remove("is-invalid");
+    validarNumero.classList.remove("is-invalid");
+    validarEsquina.classList.remove("is-invalid");
+
+    if(validarCalle.value === "")
+    {
+        validarCalle.classList.add("is-invalid");
+        infoMissing = true;
+    }
+    if(validarNumero.value === "")
+    {
+        validarNumero.classList.add("is-invalid");
+        infoMissing = true;
+    }
+    if(validarEsquina.value === "")
+    {
+        validarEsquina.classList.add("is-invalid");
+        infoMissing = true;
+    }
+    
+    if(!infoMissing){
+        getJSONData(CART_BUY_URL).then(function(resultObj){
+            let validarCompra = "";
+
+            if(resultObj.status === "ok"){
+                validarCompra=resultObj.data.msg;
+            }
+            bootboox.alert(validarCompra, null);
+
+        });
+    }
+    if (e.preventDefault) e.preventDefault();
+        return false;
+});
